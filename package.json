@@ -1,6 +1,6 @@
 {
   "name": "comeondo",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "A utility to chain commands using spawn and promises",
   "main": "comeondo.js",
   "scripts": {
