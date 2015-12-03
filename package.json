@@ -1,0 +1,31 @@
+{
+  "name": "comeondo",
+  "version": "0.1.0",
+  "description": "A utility to chain commands using spawn and promises",
+  "main": "comeondo.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alexanderwallin/comeondo.git"
+  },
+  "keywords": [
+    "node",
+    "npm",
+    "cmd",
+    "command",
+    "spawn",
+    "chain",
+    "sync",
+    "series",
+    "promise",
+    "utility"
+  ],
+  "author": "Alexander Wallin <office@alexanderwallin.com> (http://alexanderwallin.com)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/alexanderwallin/comeondo/issues"
+  },
+  "homepage": "https://github.com/alexanderwallin/comeondo#readme"
+}
