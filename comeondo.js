@@ -29,13 +29,17 @@ Comeondo.setOptions = function(options, extend) {
   loglady.json(options);
   loglady.json(extend);
 
-  if (extend) {
+  if (options && extend) {
     for (let i in options) {
       loglady.intermediate('-> set', `[${i}]`, 'to', options[i]);
       Comeondo.options[i] = options[i];
     }
-  } else {
+  }
+  else if (options) {
     Comeondo.options = options;
+  }
+  else {
+    Comeondo.options = defaultOptions;
   }
 
   loglady.intermediate('... options:');
@@ -79,9 +83,9 @@ Comeondo.run = function(commands, opts) {
   loglady.intermediate('options:');
   loglady.json(Comeondo.options);
 
-
-  for (let i in commands)
+  for (let i in commands) {
     chain = chain.then(() => Comeondo.exec(commands[i]));
+  }
 
   return chain;
 }
