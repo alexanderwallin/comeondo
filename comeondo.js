@@ -25,13 +25,12 @@ Comeondo.options = defaultOptions;
 Comeondo.setOptions = function(options, extend) {
   extend = !!!extend;
 
-  loglady.fncall('setOptions()');
-  loglady.json(options);
-  loglady.json(extend);
+  loglady.fncall('Comeondo.setOptions');
+  loglady.json({ options, extend });
 
   if (options && extend) {
     for (let i in options) {
-      loglady.intermediate('-> set', `[${i}]`, 'to', options[i]);
+      loglady.intermediate(`-> set options[${i}] = ${options[i]}`);
       Comeondo.options[i] = options[i];
     }
   }
@@ -68,20 +67,15 @@ Comeondo.getExecutableCmd = function(command) {
  * @return {Object}          A promise
  */
 Comeondo.run = function(commands, opts) {
-  let chain = Q();
-
-  if (opts) {
-    Comeondo.setOptions(opts);
-  }
-  else {
-    Comeondo.setOptions(defaultOptions);
-  }
-
-  loglady.section('Comeondo.run()');
+  loglady.section('Comeondo.run');
   loglady.intermediate('commands:');
   loglady.json(commands);
-  loglady.intermediate('options:');
-  loglady.json(Comeondo.options);
+  loglady.intermediate('opts:');
+  loglady.json(opts);
+
+  Comeondo.setOptions(opts || null);
+
+  let chain = Comeondo.exec(commands.shift());
 
   for (let i in commands) {
     chain = chain.then(() => Comeondo.exec(commands[i]));
@@ -98,7 +92,7 @@ Comeondo.run = function(commands, opts) {
  * @return {Object}         A promise
  */
 Comeondo.exec = function(command) {
-  loglady.fncall('Comeondo.exec()');
+  loglady.action('Comeondo.exec');
   loglady.intermediate(command);
   const cmdObj = Comeondo.getExecutableCmd(command);
 
@@ -107,7 +101,7 @@ Comeondo.exec = function(command) {
     proc.stdout.setEncoding('utf8');
     proc.stdout.on('data', Comeondo.pipeStdout);
     proc.stderr.on('data', Comeondo.pipeStdout);
-    proc.on('close', (code) => resolve());
+    proc.on('close', (code) => resolve(code));
     proc.on('exit', (code) => code > 0 && reject(code));
   });
 }

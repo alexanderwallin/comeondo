@@ -30,7 +30,7 @@
   },
   "homepage": "https://github.com/alexanderwallin/comeondo#readme",
   "devDependencies": {
-    "loglady": "^1.0.0",
+    "loglady": "^1.0.2",
     "q": "^1.4.1"
   }
 }
