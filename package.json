@@ -4,7 +4,8 @@
   "description": "A utility to chain commands using spawn and promises",
   "main": "comeondo.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "release": "npm version -m \"Updates to version %s\"",
+    "postversion": "git push && git push --tags"
   },
   "repository": {
     "type": "git",
