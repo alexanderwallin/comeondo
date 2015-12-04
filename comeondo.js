@@ -6,7 +6,7 @@ const loglady = require('loglady');
 
 const defaultOptions = {
   stdio: ['inherit'],
-}
+};
 
 /**
  * Comeando object
@@ -28,14 +28,16 @@ Comeondo.setOptions = function(options, extend) {
   loglady.fncall('Comeondo.setOptions');
   loglady.json({ options, extend });
 
-  if (options && extend) {
-    for (let i in options) {
-      loglady.intermediate(`-> set options[${i}] = ${options[i]}`);
-      Comeondo.options[i] = options[i];
+  if (options) {
+    if (extend) {
+      for (let i in options) {
+        loglady.intermediate(`-> set options[${i}] = ${options[i]}`);
+        Comeondo.options[i] = options[i];
+      }
     }
-  }
-  else if (options) {
-    Comeondo.options = options;
+    else {
+      Comeondo.options = options;
+    }
   }
   else {
     Comeondo.options = defaultOptions;
