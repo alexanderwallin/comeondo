@@ -29,6 +29,7 @@
   },
   "homepage": "https://github.com/alexanderwallin/comeondo#readme",
   "devDependencies": {
-    "promise": "^7.0.4"
+    "loglady": "^1.0.0",
+    "q": "^1.4.1"
   }
 }

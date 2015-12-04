@@ -1,13 +1,48 @@
 'use strict';
 
-const Promise = require('promise');
+const Q = require('q');
 const spawn  = require('child_process').spawn;
+const loglady = require('loglady');
+
+const defaultOptions = {
+  stdio: ['inherit'],
+}
 
 /**
  * Comeando object
  * @type {Object}
  */
 let Comeondo = {};
+
+Comeondo.options = defaultOptions;
+
+/**
+ * Sets or extends options to pass to spawn.
+ *
+ * @param {Object}  options Options object
+ * @param {boolean} extend  Whether to extend the current options
+ */
+Comeondo.setOptions = function(options, extend) {
+  extend = !!!extend;
+
+  loglady.fncall('setOptions()');
+  loglady.json(options);
+  loglady.json(extend);
+
+  if (extend) {
+    for (let i in options) {
+      loglady.intermediate('-> set', `[${i}]`, 'to', options[i]);
+      Comeondo.options[i] = options[i];
+    }
+  } else {
+    Comeondo.options = options;
+  }
+
+  loglady.intermediate('... options:');
+  loglady.json(Comeondo.options);
+
+  return Comeondo;
+}
 
 /**
  * Returns an object with cmd and args properties to send to
@@ -28,12 +63,25 @@ Comeondo.getExecutableCmd = function(command) {
  * @param  {String} commands An array of commands
  * @return {Object}          A promise
  */
-Comeondo.run = function(commands) {
-  let chain = new Promise((resolve) => resolve());
+Comeondo.run = function(commands, opts) {
+  let chain = Q();
 
-  commands.forEach(command => {
-    chain = chain.then(() => Comeondo.exec(command));
-  });
+  if (opts) {
+    Comeondo.setOptions(opts);
+  }
+  else {
+    Comeondo.setOptions(defaultOptions);
+  }
+
+  loglady.section('Comeondo.run()');
+  loglady.intermediate('commands:');
+  loglady.json(commands);
+  loglady.intermediate('options:');
+  loglady.json(Comeondo.options);
+
+
+  for (let i in commands)
+    chain = chain.then(() => Comeondo.exec(commands[i]));
 
   return chain;
 }
@@ -46,10 +94,12 @@ Comeondo.run = function(commands) {
  * @return {Object}         A promise
  */
 Comeondo.exec = function(command) {
+  loglady.fncall('Comeondo.exec()');
+  loglady.intermediate(command);
   const cmdObj = Comeondo.getExecutableCmd(command);
 
-  return new Promise((resolve, reject) => {
-    var proc = spawn(cmdObj.cmd, cmdObj.args, { stdio: ['inherit'] });
+  return Q.promise((resolve, reject) => {
+    var proc = spawn(cmdObj.cmd, cmdObj.args, Comeondo.options);
     proc.stdout.setEncoding('utf8');
     proc.stdout.on('data', Comeondo.pipeStdout);
     proc.stderr.on('data', Comeondo.pipeStdout);
