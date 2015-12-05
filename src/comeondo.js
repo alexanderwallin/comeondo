@@ -93,10 +93,12 @@ Comeondo.run = function(commands, opts) {
  * @param  {String} command A command
  * @return {Object}         A promise
  */
-Comeondo.exec = function(command) {
+Comeondo.exec = function(command, opts) {
   loglady.action('Comeondo.exec');
   loglady.intermediate(command);
   const cmdObj = Comeondo.getExecutableCmd(command);
+
+  Comeondo.setOptions(opts || null);
 
   return Q.promise((resolve, reject) => {
     var proc = spawn(cmdObj.cmd, cmdObj.args, Comeondo.options);
