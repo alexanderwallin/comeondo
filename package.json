@@ -7,7 +7,7 @@
     "dist": "./node_modules/.bin/babel ./src --out-dir ./dist",
     "prepublish": "npm run dist",
     "release": "npm version -m \"Updates to version %s\"",
-    "postversion": "git push && git push --tags"
+    "postversion": "npm publish && git push && git push --tags"
   },
   "repository": {
     "type": "git",
