@@ -3,6 +3,36 @@
 
 # comeondo
 
-**comeondo** (*come on, doh*) is a basic utility for chaining commands in node.js. It runs commands using spawn and promises.
+**comeondo** (*come on, doh*) is a basic utility for chaining asynchronous commands in node.js. It runs commands using `spawn` and promises.
 
-![](https://images.duckduckgo.com/iu/?u=http%3A%2F%2Fwww.entropiaplanets.com%2Fattachments%2Flleyton-hewitt-5813043-jpg.3077%2F&f=1)
+### Features
+
+* Chains asynchronous commands in promises
+* Captures user input if prompted
+* Outputs feedback using [loglady](https://github.com/alexanderwallin/loglady)
+
+## Installation
+
+```bash
+npm install comeondo
+```
+
+## Usage
+
+```javascript
+const comeondo = require('comeondo');
+
+comeonedo.exec('pwd');
+// -> "/Users/myname/path/to/current/dir"
+
+const path = require('path');
+
+comeondo.run([
+  'cp README.md README-copy.md',
+  'rm README.md'
+] {
+  cwd: path.resolve(__dirname, '..', 'siblingDir'),
+}).then(() => {
+  // Commands have run, let's do stuff
+});
+```
