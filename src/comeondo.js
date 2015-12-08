@@ -84,14 +84,16 @@ Comeondo.run = function(commands, opts) {
  * @return {Object}         A promise
  */
 Comeondo.exec = function(command, opts) {
+  if (typeof command === 'string')
+    command = Comeondo.getExecutableCmd(command);
+
   loglady.action('Comeondo.exec');
-  loglady.command(command);
-  const cmdObj = Comeondo.getExecutableCmd(command);
+  loglady.command(`${command.cmd} ${command.args.join(' ')}`);
 
   Comeondo.setOptions(opts || null);
 
   return Q.promise((resolve, reject) => {
-    var proc = spawn(cmdObj.cmd, cmdObj.args, Comeondo.options);
+    var proc = spawn(command.cmd, command.args, Comeondo.options);
     proc.stdout.setEncoding('utf8');
     proc.stdout.on('data', Comeondo.pipeStdout);
     proc.stderr.on('data', Comeondo.pipeStdout);
