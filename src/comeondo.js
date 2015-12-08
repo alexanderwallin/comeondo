@@ -25,9 +25,6 @@ Comeondo.options = defaultOptions;
 Comeondo.setOptions = function(options, extend) {
   extend = !!!extend;
 
-  loglady.fncall('Comeondo.setOptions');
-  loglady.json({ options, extend });
-
   if (options) {
     if (extend) {
       for (let i in options) {
@@ -42,9 +39,6 @@ Comeondo.setOptions = function(options, extend) {
   else {
     Comeondo.options = defaultOptions;
   }
-
-  loglady.intermediate('... options:');
-  loglady.json(Comeondo.options);
 
   return Comeondo;
 }
@@ -70,10 +64,6 @@ Comeondo.getExecutableCmd = function(command) {
  */
 Comeondo.run = function(commands, opts) {
   loglady.section('Comeondo.run');
-  loglady.intermediate('commands:');
-  loglady.json(commands);
-  loglady.intermediate('opts:');
-  loglady.json(opts);
 
   Comeondo.setOptions(opts || null);
 
@@ -95,7 +85,7 @@ Comeondo.run = function(commands, opts) {
  */
 Comeondo.exec = function(command, opts) {
   loglady.action('Comeondo.exec');
-  loglady.intermediate(command);
+  loglady.command(command);
   const cmdObj = Comeondo.getExecutableCmd(command);
 
   Comeondo.setOptions(opts || null);
