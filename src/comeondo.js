@@ -1,7 +1,7 @@
 'use strict';
 
 const Q = require('q');
-const spawn  = require('child_process').spawn;
+const spawn  = require('win-spawn');
 const loglady = require('loglady');
 
 const defaultOptions = {

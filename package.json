@@ -37,7 +37,8 @@
   "homepage": "https://github.com/alexanderwallin/comeondo#readme",
   "dependencies": {
     "loglady": "^1.1.0",
-    "q": "^1.4.1"
+    "q": "^1.4.1",
+    "win-spawn": "^2.0.0"
   },
   "devDependencies": {
     "babel-cli": "^6.3.13",
