@@ -16,3 +16,4 @@ node_modules
 
 # Package stuff
 dist
+test.js
