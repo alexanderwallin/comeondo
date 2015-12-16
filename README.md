@@ -3,7 +3,7 @@
 
 # comeondo
 
-**comeondo** (*come on, doh*) is a basic utility for chaining asynchronous commands in node.js. It runs commands using `spawn` and promises.
+**comeondo** is a basic utility for chaining asynchronous commands in node.js. It runs commands using `spawn` and promises.
 
 ### Features
 
